@@ -7,12 +7,18 @@ const multer = require("multer");
 const fs = require("fs");
 
 const app = express();
+const constants = require("../config/config.json");
+
 
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  database: "lab1",
+  host: constants.development.host,
+  user: constants.development.username,
+  password: constants.development.password,
+  port: constants.development.port,
+  database: constants.development.database,
 });
+
+
 
 const fileStorageEngine = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -38,7 +44,7 @@ const upload = multer({ storage: fileStorageEngine });
 app.use(express.static("public"));
 app.use("/images", express.static("images"));
 
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cors({ origin: "http://3.86.251.108:3000", credentials: true }));
 
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
@@ -167,7 +173,7 @@ app.post("/userupdate", upload.single("file"), function (request, response) {
     console.log("File Renamed.");
   });
   // console.log(file);
-  image = "http://localhost:3001/images/users/" + username + ".jpeg";
+  image = "http://3.86.251.108:3001/images/users/" + username + ".jpeg";
   if (username) {
     db.query(
       "UPDATE `users` SET `image`=?,`name`=?,`email`=?,`phone`=?,`gender`=?,`birthday`=?,`address`=?,`city`=?,`country`=? WHERE `username` = ?",
@@ -259,7 +265,7 @@ app.post("/shopimage", upload.single("file"), function (request, response) {
   });
   // console.log(file);
   image =
-    "http://localhost:3001/images/shops/" + request.body.shop + ".jpeg";
+    "http://3.86.251.108:3001/images/shops/" + request.body.shop + ".jpeg";
   // Execute SQL query that'll select the account from the database based on the specified username and password
   db.query(
     "UPDATE `users` SET `shopimage`=? WHERE `shop` = ?",
@@ -299,7 +305,7 @@ app.post("/additem", upload.single("file"), function (request, response) {
   });
   // console.log(file);
   image =
-    "http://localhost:3001/images/items/" + request.body.name + ".jpeg";
+    "http://3.86.251.108:3001/images/items/" + request.body.name + ".jpeg";
   // Execute SQL query that'll select the account from the database based on the specified username and password
   db.query(
     "INSERT INTO `items`(`image`,`name`, `category`, `price`, `description`, `quantity`, `shop`) VALUES (?,?,?,?,?,?,?)",
@@ -338,7 +344,7 @@ app.post("/edititem", upload.single("file"), function (request, response) {
   // Capture the input fields
   console.log("body: ", request.body);
   image =
-    "http://localhost:3001/images/items/" + request.body.name + ".jpeg";
+    "http://3.86.251.108:3001/images/items/" + request.body.name + ".jpeg";
   fs.rename("public/images/items/file.jpeg", image, function (err) {
     if (err) {
       console.log(err);
