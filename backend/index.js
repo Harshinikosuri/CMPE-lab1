@@ -172,7 +172,7 @@ app.post("/userupdate", upload.single("file"), function (request, response) {
     }
     console.log("File Renamed.");
   });
-  // console.log(file);
+  
   image = "http://3.86.251.108:3001/images/users/" + username + ".jpeg";
   if (username) {
     db.query(
