@@ -39,7 +39,7 @@ export default function Cart() {
         setTotal(0);
       }
     }
-
+// comment
     getTotal();
   }, [item]);
 
