@@ -42,6 +42,7 @@ export default function Cart() {
 
     getTotal();
   }, [item]);
+  // git collab
 
   const addpurchased = () => {
     const data = {
