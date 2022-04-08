@@ -162,7 +162,7 @@ app.get("/getuserdata", function (request, response) {
     }
   );
 });
-// c
+
 
 app.post("/userupdate", upload.single("file"), function (request, response) {
   let username = request.body.username;
