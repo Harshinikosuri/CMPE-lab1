@@ -162,7 +162,7 @@ app.get("/getuserdata", function (request, response) {
     }
   );
 });
-//commentt
+//commenttt
 app.post("/userupdate", upload.single("file"), function (request, response) {
   let username = request.body.username;
   image = "public/images/users/" + username + ".jpeg";
