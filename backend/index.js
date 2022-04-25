@@ -94,7 +94,7 @@ app.post("/login", function (request, response) {
           response.writeHead(200, {
             "Content-Type": "text/plain",
           });
-          // Redirect to home page
+         
           console.log("Correct");
           response.end("SUCCESS");
         } else {
