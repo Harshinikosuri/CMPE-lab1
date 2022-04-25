@@ -5,18 +5,25 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const multer = require("multer");
 const fs = require("fs");
+const mongoose = require("mongoose");
+require('dotenv').config();
 
 const app = express();
 const constants = require("../config/config.json");
+const CONNECTION_URL = 'mongodb+srv://harshini1699:Harshini@1699@cluster0.e7wdq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+const PORT =process.env.PORT || 5000;
+mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true})
+    .then(()=>app.listen(PORT, () => console.log('Server running on port: ${PORT}')))
+    .catch((error)=>console.log(error.message));
+//mongoose.set('useFindAndModify',false);   
 
-
-const db = mysql.createConnection({
-  host: constants.development.host,
-  user: constants.development.username,
-  password: constants.development.password,
-  port: constants.development.port,
-  database: constants.development.database,
-});
+// const db = mysql.createConnection({
+//   host: constants.development.host,
+//   user: constants.development.username,
+//   password: constants.development.password,
+//   port: constants.development.port,
+//   database: constants.development.database,
+// });
 
 
 
@@ -50,11 +57,11 @@ app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 // app.use(bodyParser.json());
 
-db.connect((err) => {
-  if (err) {
-    throw err;
-  }
-});
+// db.connect((err) => {
+//   if (err) {
+//     throw err;
+//   }
+// });
 
 app.use(
   session({
@@ -163,7 +170,7 @@ app.get("/getuserdata", function (request, response) {
   );
 
 });
-// git collab
+
 
 
 app.post("/userupdate", upload.single("file"), function (request, response) {
@@ -539,8 +546,7 @@ app.get("/getfavourites", function (request, response) {
 app.get("/getsearchitems", function (request, response) {
   console.log("request: ", request.query);
   const filter = request.query.filter;
-  // const query = ;
-  // console.log(query);
+  
   if (filter) {
     if (filter == 1) {
       db.query(
